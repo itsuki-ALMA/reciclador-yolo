@@ -114,25 +114,8 @@ Dataset adaptado a partir da base pública TrashNet.
 
 Interface Web → API FastAPI → Modelo YOLO11 → Resultado da Classificação
 
-Usuário
-   │
-   ▼
-Frontend (HTML/CSS/JS)
-   │
-   │ Upload da imagem
-   ▼
-API FastAPI
-   │
-   │ Chama o modelo
-   ▼
-YOLO11n-cls (best.pt)
-   │
-   │ Predição
-   ▼
-Classe + Confiança
-   │
-   ▼
-Frontend exibe resultado
+![Arquitetura](images/arquitetura.png)
+
 ---
 
 ## Endpoints da API
@@ -174,18 +157,10 @@ Exemplo:
 
 ---
 
-## Resultados
+## Gráficos
 
-### Métricas
-
-Inserir aqui os resultados obtidos após o treinamento.
-
-### Gráficos
-
-Inserir:
-
-* ![Resultados](images/results.png)
-* ![Matriz de Confusão](images/confusion_matrix.png)
+![Resultados](images/results.png)
+![Matriz de Confusão](images/confusion_matrix.png)
 
 ---
 
