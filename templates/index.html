@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classificador de Recicláveis</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>♻️ Classificador de Recicláveis</h1>
+
+        <p class="subtitle">
+            Identifique automaticamente papel, plástico, metal e vidro usando YOLO.
+        </p>
+
+        <div class="card">
+
+            <input type="file" id="file" accept="image/*">
+
+            <button onclick="enviar()">
+                Classificar Imagem
+            </button>
+
+            <div class="preview-container">
+                <img id="preview" src="" alt="">
+            </div>
+
+            <div id="resultado" class="resultado"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const input = document.getElementById("file");
+        const preview = document.getElementById("preview");
+
+        input.addEventListener("change", function () {
+
+            const arquivo = this.files[0];
+
+            if (!arquivo) return;
+
+            preview.src = URL.createObjectURL(arquivo);
+            preview.style.display = "block";
+        });
+
+        async function enviar() {
+
+            const arquivo =
+                document.getElementById("file").files[0];
+
+            if (!arquivo) {
+                alert("Selecione uma imagem.");
+                return;
+            }
+
+            const formData = new FormData();
+
+            formData.append("file", arquivo);
+
+            document.getElementById("resultado").innerHTML =
+                "⏳ Processando imagem...";
+
+            const resposta = await fetch("/predict", {
+                method: "POST",
+                body: formData
+            });
+
+            const dados = await resposta.json();
+
+            document.getElementById("resultado").innerHTML = `
+        <div class="classe">
+            ${dados.classe}
+        </div>
+
+        <div class="confianca">
+            Confiança: ${dados.confianca}%
+        </div>
+    `;
+        }
+
+    </script>
+
+</body>
+
+</html>
